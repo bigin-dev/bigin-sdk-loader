@@ -1,10 +1,10 @@
 Bigin SDK Loader for Google Tag Manager
 ---
 
-> :warning: This tag template only provide the bigin basic event.
+> :warning: This tag template only provide the bigin basic event.  
 > Install the `Bigin SDK tag` if you want the another bigin sdk event.
 
-This tag loads resource for Bigin SDK such as `bigin.sdk.js`.
+This tag loads resource for Bigin SDK such as `bigin.sdk.js`.  
 Since it is also use for collecting data, it should be called on `every pages` of your Web Application to use our services.
 
 # How to install
