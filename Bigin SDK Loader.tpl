@@ -53,18 +53,16 @@ const getTimeStamp = require('getTimestamp');
 const copyFromWindow = require('copyFromWindow');
 const setInWindow = require('setInWindow');
 const injectScript = require('injectScript');
-const callInWindow = require('callInWindow');
 
+const biginQueue = createQueue('_b_g_e_b_f');
 const bigin = copyFromWindow('bigin') ? copyFromWindow('bigin') : {};
 
 bigin.user = function (command, data) {
-  const biginQeueuFromWindow = createQueue('_b_g_e_b_f');
-  biginQeueuFromWindow({type: 'user', command: command, data: data});
+  biginQueue.push({type: 'user', command: command, data: data});
 };
 
 bigin.event = function (command, data, timestamp) {
-  const biginQeueuFromWindow = createQueue('_b_g_e_b_f');
-  biginQeueuFromWindow({
+  biginQueue.push({
     type: 'event',
     command: command,
     data: data,
@@ -73,34 +71,32 @@ bigin.event = function (command, data, timestamp) {
 };
 
 bigin.track = function (command, data) {
-  const biginQeueuFromWindow = createQueue('_b_g_e_b_f');
-  biginQeueuFromWindow({
+  biginQueue.push({
     type: 'track',
     command: command,
     data: data
   });
 };
 
-setInWindow('bigin', bigin, true);
+setInWindow('bigin', bigin, false);
 
 const onInjectScriptSuccess = function () {
   const biginFromWindow = copyFromWindow('bigin');
   const biginQeueuFromWindow = copyFromWindow('_b_g_e_b_f');
-  
+
   if (biginFromWindow) {
     biginFromWindow.config({
       projectID: data.projectID,
       currencyCode: data.currencyCode
     });
   }
-  
+
   if (biginQeueuFromWindow && biginQeueuFromWindow.length > 0) {
     biginQeueuFromWindow.forEach(function (event) {
-      callInWindow('bigin.'+event.type, event.command, event.data, event.timestamp);
+      event.type(event.command, event.data, event.timestamp);
     });
   }
-  
-  setInWindow('bigin', biginFromWindow, true);   
+
   data.gtmOnSuccess();
 };
 
@@ -367,6 +363,6 @@ scenarios: []
 
 ___NOTES___
 
-Created on 2022. 2. 17. 오후 2:16:13
+Created on 2022. 2. 18. 오후 1:45:19
 
 
