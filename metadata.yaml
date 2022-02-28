@@ -1,5 +1,5 @@
 homepage: "https://bigin.io/main"
 documentation: "https://guide.bigin.io/"
 versions:
-  - sha: 2b985ceb126a20fe60ab8e9f70d2a2c0ea0d97ce
+  - sha: 7cf2fe9a33519f4e5e3e628ad0503d501dd0df2a
     changeNotes: Initial release
